@@ -3,64 +3,351 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>EasySMS</title>
+  <title>EasySMS - Direct Download</title>
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --card-bg: rgba(17, 24, 39, 0.88);
+      --card-border: rgba(255, 255, 255, 0.08);
+      --text-main: #f3f4f6;
+      --text-sub: #9ca3af;
+      --warn-bg: rgba(245, 158, 11, 0.08);
+      --warn-border: rgba(245, 158, 11, 0.28);
+      --warn-text: #fbbf24;
+      --step-bg: rgba(255, 255, 255, 0.035);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-      background: linear-gradient(135deg, #0b0f19 0%, #1a2234 100%);
+      background: radial-gradient(circle at 50% 0%, #1e293b 0%, #0b0f19 80%);
       min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 24px;
-      color: #f1f5f9;
+      padding: 24px 16px;
+      color: var(--text-main);
+      line-height: 1.5;
     }
     .container {
-      background: rgba(30, 41, 59, 0.85);
-      backdrop-filter: blur(16px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: var(--card-bg);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--card-border);
       border-radius: 24px;
-      padding: 36px 32px;
-      max-width: 360px;
+      padding: 28px 22px;
+      max-width: 440px;
       width: 100%;
-      text-align: center;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
+      position: relative;
     }
-    h1 {
-      font-size: 24px;
+    /* Top Bar */
+    .header-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 22px;
+    }
+    .badge-official {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 11px;
       font-weight: 700;
-      margin-bottom: 24px;
+      letter-spacing: 0.4px;
+      color: #10b981;
+      background: rgba(16, 185, 129, 0.12);
+      border: 1px solid rgba(16, 185, 129, 0.25);
+      padding: 4px 9px;
+      border-radius: 20px;
+      text-transform: uppercase;
+    }
+    .lang-switcher {
+      display: inline-flex;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      padding: 2px;
+    }
+    .lang-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-sub);
+      font-size: 12px;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 16px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .lang-btn.active {
+      background: var(--primary);
+      color: #ffffff;
+      box-shadow: 0 2px 8px rgba(37, 99, 235, 0.4);
+    }
+    /* Brand */
+    .brand-section {
+      text-align: center;
+      margin-bottom: 22px;
+    }
+    .app-icon {
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+      border-radius: 18px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      margin-bottom: 12px;
+      box-shadow: 0 8px 20px rgba(37, 99, 235, 0.35);
+    }
+    .app-title {
+      font-size: 24px;
+      font-weight: 800;
       letter-spacing: -0.5px;
       color: #ffffff;
+      margin-bottom: 4px;
     }
+    .app-desc {
+      font-size: 13px;
+      color: var(--text-sub);
+    }
+    /* Download Button */
     .btn-download {
-      display: block;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
       background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
       color: #ffffff;
       text-decoration: none;
-      padding: 14px 20px;
-      border-radius: 12px;
+      padding: 15px 20px;
+      border-radius: 14px;
       font-size: 16px;
-      font-weight: 600;
-      box-shadow: 0 8px 20px rgba(37, 99, 235, 0.35);
-      transition: all 0.2s ease;
+      font-weight: 700;
+      box-shadow: 0 10px 25px -5px rgba(37, 99, 235, 0.5);
+      transition: transform 0.2s, box-shadow 0.2s;
+      margin-bottom: 22px;
     }
     .btn-download:hover {
       transform: translateY(-2px);
-      box-shadow: 0 12px 24px rgba(37, 99, 235, 0.5);
+      box-shadow: 0 14px 28px -4px rgba(37, 99, 235, 0.6);
     }
     .btn-download:active {
       transform: translateY(0);
+    }
+    /* Warning Box */
+    .notice-card {
+      background: var(--warn-bg);
+      border: 1px solid var(--warn-border);
+      border-radius: 16px;
+      padding: 16px 15px;
+      text-align: left;
+    }
+    .notice-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+    .notice-icon {
+      font-size: 18px;
+      line-height: 1;
+    }
+    .notice-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--warn-text);
+    }
+    .notice-lead {
+      font-size: 12px;
+      color: #e5e7eb;
+      margin-bottom: 12px;
+      line-height: 1.45;
+    }
+    /* Steps */
+    .steps-list {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+      margin-bottom: 12px;
+    }
+    .step-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 9px;
+      background: var(--step-bg);
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      padding: 8px 10px;
+      border-radius: 9px;
+      font-size: 12px;
+      color: #d1d5db;
+      line-height: 1.4;
+    }
+    .step-num {
+      flex-shrink: 0;
+      width: 18px;
+      height: 18px;
+      background: rgba(245, 158, 11, 0.2);
+      color: var(--warn-text);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      font-weight: 700;
+      margin-top: 1px;
+    }
+    .step-text strong {
+      color: #ffffff;
+    }
+    /* Quick tip */
+    .quick-tip {
+      background: rgba(59, 130, 246, 0.1);
+      border: 1px dashed rgba(59, 130, 246, 0.35);
+      border-radius: 9px;
+      padding: 9px 11px;
+      font-size: 11.5px;
+      color: #93c5fd;
+      line-height: 1.45;
+    }
+    .quick-tip strong {
+      color: #bfdbfe;
+    }
+    /* Footer */
+    .footer-note {
+      text-align: center;
+      margin-top: 18px;
+      font-size: 11px;
+      color: #6b7280;
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>EasySMS</h1>
-    <a class="btn-download" href="https://github.com/Jedcoming/easysms/releases/latest/download/EasySMS-latest.apk">
-      Download APK
+    <div class="header-bar">
+      <span class="badge-official">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        <span id="badgeText">Verified</span>
+      </span>
+      <div class="lang-switcher">
+        <button class="lang-btn active" id="btnEn" onclick="switchLang('en')">English</button>
+        <button class="lang-btn" id="btnBn" onclick="switchLang('bn')">বাংলা</button>
+      </div>
+    </div>
+
+    <div class="brand-section">
+      <div class="app-icon">📱</div>
+      <h1 class="app-title">EasySMS</h1>
+      <p class="app-desc" id="appDesc">SMS & OTP Gateway Terminal</p>
+    </div>
+
+    <a class="btn-download" href="https://github.com/Jedcoming/easysms/releases/latest/download/EasySMS-latest.apk" id="downloadBtn">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+      <span id="downloadBtnText">Download APK</span>
     </a>
+
+    <div class="notice-card">
+      <div class="notice-header">
+        <span class="notice-icon">⚠️</span>
+        <div class="notice-title" id="noticeTitle">Turn Off "Play Protect" Before Installing</div>
+      </div>
+      <p class="notice-lead" id="noticeLead">
+        If Android blocks the installation, please disable Play Protect or tap <strong>"Install anyway"</strong>:
+      </p>
+
+      <div class="steps-list" id="stepsList"></div>
+
+      <div class="quick-tip" id="quickTip"></div>
+    </div>
+
+    <div class="footer-note" id="footerText">
+      Direct release • Verified secure package
+    </div>
   </div>
+
+  <script>
+    var content = {
+      en: {
+        badge: 'Verified Release',
+        appDesc: 'Realtime SMS & OTP Gateway Console',
+        btnText: 'Download APK',
+        noticeTitle: 'Turn Off "Play Protect" Before Installing',
+        noticeLead: 'Because this app is installed outside Google Play Store, Android Play Protect may block it. Follow these steps to install smoothly:',
+        steps: [
+          'Open <strong>Google Play Store</strong> app on your device',
+          'Tap your <strong>Profile Icon</strong> at the top-right corner',
+          'Select <strong>"Play Protect"</strong> from the menu',
+          'Tap the <strong>Settings (Gear ⚙️)</strong> icon at the top-right',
+          'Turn OFF <strong>"Scan apps with Play Protect"</strong>'
+        ],
+        quickTip: '⚡ <strong>Direct Shortcut:</strong> If you see "Blocked by Play Protect" when installing, tap <strong>"More details"</strong> and then select <strong>"Install anyway"</strong>.',
+        footer: 'Direct release • 100% verified secure package'
+      },
+      bn: {
+        badge: 'যাচাইকৃত সংস্করণ',
+        appDesc: 'রিয়েলটাইম এসএমএস ও ওটিপি গেটওয়ে টার্মিনাল',
+        btnText: 'APK ডাউনলোড করুন',
+        noticeTitle: 'ইনস্টল করার আগে "Play Protect" বন্ধ করুন',
+        noticeLead: 'গুগল প্লে স্টোরের বাইরে থেকে ডাউনলোড করায় প্লে প্রোটেক্ট অ্যাপটি ব্লক করতে পারে। সফলভাবে ইনস্টল করতে নিচের ধাপগুলো অনুসরণ করুন:',
+        steps: [
+          'আপনার ফোনের <strong>Google Play Store</strong> অ্যাপটি খুলুন',
+          'উপরের ডানদিকের <strong>প্রোফাইল আইকনে</strong> ট্যাপ করুন',
+          'মেনু থেকে <strong>"Play Protect"</strong> অপশনে ট্যাপ করুন',
+          'উপরের ডানদিকের <strong>সেটিংস (গিয়ার ⚙️)</strong> আইকনে ট্যাপ করুন',
+          '<strong>"Scan apps with Play Protect"</strong> বন্ধ (Turn off) করুন'
+        ],
+        quickTip: '⚡ <strong>সহজ উপায়:</strong> ইনস্টল করার সময় যদি "Blocked by Play Protect" সতর্কবার্তা আসে, তবে নিচে <strong>"More details"</strong> এ ট্যাপ করে <strong>"Install anyway"</strong> বেছে নিন।',
+        footer: 'অফিসিয়াল রিলিজ • শতভাগ নিরাপদ প্যাকেজ'
+      }
+    };
+
+    function render(lang) {
+      var data = content[lang];
+      document.getElementById('badgeText').innerText = data.badge;
+      document.getElementById('appDesc').innerText = data.appDesc;
+      document.getElementById('downloadBtnText').innerText = data.btnText;
+      document.getElementById('noticeTitle').innerText = data.noticeTitle;
+      document.getElementById('noticeLead').innerHTML = data.noticeLead;
+
+      var stepsContainer = document.getElementById('stepsList');
+      stepsContainer.innerHTML = '';
+      for (var i = 0; i < data.steps.length; i++) {
+        var item = document.createElement('div');
+        item.className = 'step-item';
+        item.innerHTML = '<span class="step-num">' + (i + 1) + '</span><span class="step-text">' + data.steps[i] + '</span>';
+        stepsContainer.appendChild(item);
+      }
+
+      document.getElementById('quickTip').innerHTML = data.quickTip;
+      document.getElementById('footerText').innerText = data.footer;
+
+      document.getElementById('btnEn').className = 'lang-btn' + (lang === 'en' ? ' active' : '');
+      document.getElementById('btnBn').className = 'lang-btn' + (lang === 'bn' ? ' active' : '');
+      document.documentElement.lang = lang;
+    }
+
+    function switchLang(lang) {
+      try { localStorage.setItem('pref_lang', lang); } catch(e) {}
+      render(lang);
+    }
+
+    (function() {
+      var saved = null;
+      try { saved = localStorage.getItem('pref_lang'); } catch(e) {}
+      if (saved === 'en' || saved === 'bn') {
+        render(saved);
+        return;
+      }
+      var userLang = (navigator.language || navigator.userLanguage || '').toLowerCase();
+      if (userLang.indexOf('bn') === 0) {
+        render('bn');
+      } else {
+        render('en');
+      }
+    })();
+  </script>
 </body>
 </html>
